@@ -2638,7 +2638,9 @@ textarea.form-control {
 }
 
 .footer {
-  background-color: #FFFFFF;
+  font-weight: 700;
+  color: #fff!important;
+  background-color: #333;
   line-height: 36px;
 }
 .footer.footer-black h4 {
