@@ -15,13 +15,23 @@
 <body>
 
     <form>
-        <table id="socailAccounts">
-
+            socialHandle :<input type="text" name="socialHandle" class="form-control col-md-3 socialHandle"/>
+            name :<input type="text" name="name" class="form-control col-md-3 name"/>
+            photoUrl :<input type="text" name="photoUrl" class="form-control col-md-3 photoUrl"/>
+            profession :<input type="text" name="profession" class="form-control col-md-3 profession"/>
+            socialWorth :<input type="text" name="socialWorth" class="form-control col-md-3 socialWorth"/>
+            <br>
+            <table id="socailAccounts">
         </table>
     </form>
     <button type="button" class="btn btn-primary" onclick="append_more()">Add +</button>
     <button type="button" class="btn btn-primary" onclick="submit_form()">Submit</button>
     <script>
+        $('.socialHandle').val(data.socialHandle);
+        $('.name').val(data.name);
+        $('.photoUrl').val(data.photoUrl);
+        $('.profession').val(data.profession);
+        $('.socialWorth').val(data.socialWorth);
         temp = "<tr>";
         for (prop in data.socialAccounts[0]) {
             temp += "<th>" + prop + "</th>";
@@ -50,6 +60,13 @@
         function submit_form() {
             prop_arr = [];
             obj_arr = [];
+            myobj = new Object();
+            myobj.socialHandle = $('.socialHandle').val();
+            myobj.name = $('.name').val();
+            myobj.photoUrl = $('.photoUrl').val();
+            myobj.profession = $('.profession').val();
+            myobj.socialWorth = $('.socialWorth').val();
+            obj_arr.push(myobj);
             for (prop in data.socialAccounts[0]) {
                 prop_arr.push(prop);
             }
