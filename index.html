@@ -52,11 +52,11 @@
                         <a href="/mysocialhandle/#about" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
-                            <a href="terms.html" class="nav-link">Terms and Service</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="privacy.html" class="nav-link">Privacy Policy</a>
-                        </li>
+                        <a href="terms.html" class="nav-link">Terms and Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="privacy.html" class="nav-link">Privacy Policy</a>
+                    </li>
                     <li class="nav-item">
                         <a href="/mysocialhandle/#contact" class="nav-link">Contact Us</a>
                     </li>
@@ -127,16 +127,22 @@
                     <div class="col-md-5 ml-auto mr-auto text-center">
                         <div id="carousel" class="carousel">
                             <div class="slides">
-                              <div class="slide" data-state="active"> <img src="./assets/img/unnamed.webp" height="400" alt=""></div>
-                              <div class="slide"><img src="./assets/img/unnamed (1).webp" height="400" alt=""></div>
-                              <div class="slide"><img src="./assets/img/unnamed (2).webp" height="400" alt=""></div>
+                                <div class="slide" data-state="active">
+                                    <img src="./assets/img/unnamed.webp" height="400" alt="">
+                                </div>
+                                <div class="slide">
+                                    <img src="./assets/img/unnamed (1).webp" height="400" alt="">
+                                </div>
+                                <div class="slide">
+                                    <img src="./assets/img/unnamed (2).webp" height="400" alt="">
+                                </div>
                             </div>
                             <div class="indicators">
-                              <input class="indicator" name="indicator" data-slide="1" data-state="active" checked type="radio" />
-                              <input class="indicator" name="indicator" data-slide="2" type="radio" />
-                              <input class="indicator" name="indicator" data-slide="3" type="radio" />
+                                <input class="indicator" name="indicator" data-slide="1" data-state="active" checked type="radio" />
+                                <input class="indicator" name="indicator" data-slide="2" type="radio" />
+                                <input class="indicator" name="indicator" data-slide="3" type="radio" />
                             </div>
-                          </div>
+                        </div>
                     </div>
                     <!-- <div class="col-md-5 ml-auto mr-auto text-center">
                         <div style="margin-top:100px;" class="MagicScroll" data-options="autoplay: 1000; step: 1; mode: carousel; height: 275;">
@@ -344,90 +350,95 @@
 <!--  Paper Kit Initialization snd functons -->
 <script src="./assets/js/paper-kit.js?v=2.1.0"></script>
 <script>
- var carousel = document.getElementById('carousel');
-var slides = 3;
-var speed = 7000; // 5 seconds
+    var carousel = document.getElementById('carousel');
+    var slides = 3;
+    var speed = 7000; // 5 seconds
 
-function carouselHide(num) {
-    indicators[num].setAttribute('data-state', '');
-    slides[num].setAttribute('data-state', '');
+    function carouselHide(num) {
+        indicators[num].setAttribute('data-state', '');
+        slides[num].setAttribute('data-state', '');
 
-    slides[num].style.opacity=0;
-}
+        slides[num].style.opacity = 0;
+    }
 
-function carouselShow(num) {
-    indicators[num].checked = true;
-    indicators[num].setAttribute('data-state', 'active');
-    slides[num].setAttribute('data-state', 'active');
+    function carouselShow(num) {
+        indicators[num].checked = true;
+        indicators[num].setAttribute('data-state', 'active');
+        slides[num].setAttribute('data-state', 'active');
 
-    slides[num].style.opacity=1;
-}
+        slides[num].style.opacity = 1;
+    }
 
-function setSlide(slide) {
-    return function() {
+    function setSlide(slide) {
+        return function () {
+            // Reset all slides
+            for (var i = 0; i < indicators.length; i++) {
+                indicators[i].setAttribute('data-state', '');
+                slides[i].setAttribute('data-state', '');
+
+                carouselHide(i);
+            }
+
+            // Set defined slide as active
+            indicators[slide].setAttribute('data-state', 'active');
+            slides[slide].setAttribute('data-state', 'active');
+            carouselShow(slide);
+
+            // Stop the auto-switcher
+            clearInterval(switcher);
+        };
+    }
+
+    function switchSlide() {
+        var nextSlide = 0;
+
         // Reset all slides
         for (var i = 0; i < indicators.length; i++) {
-            indicators[i].setAttribute('data-state', '');
-            slides[i].setAttribute('data-state', '');
-            
+            // If current slide is active & NOT equal to last slide then increment nextSlide
+            if ((indicators[i].getAttribute('data-state') == 'active') && (i !== (indicators.length - 1))) {
+                nextSlide = i + 1;
+            }
+
+            // Remove all active states & hide
             carouselHide(i);
         }
 
-        // Set defined slide as active
-        indicators[slide].setAttribute('data-state', 'active');
-        slides[slide].setAttribute('data-state', 'active');
-        carouselShow(slide);
+        // Set next slide as active & show the next slide
+        carouselShow(nextSlide);
+    }
 
-        // Stop the auto-switcher
-        clearInterval(switcher);
-    };
-}
+    if (carousel) {
+        var slides = carousel.querySelectorAll('.slide');
+        var indicators = carousel.querySelectorAll('.indicator');
 
-function switchSlide() {
-    var nextSlide = 0;
+        var switcher = setInterval(function () {
+            switchSlide();
+        }, speed);
 
-    // Reset all slides
-    for (var i = 0; i < indicators.length; i++) {
-        // If current slide is active & NOT equal to last slide then increment nextSlide
-        if ((indicators[i].getAttribute('data-state') == 'active') && (i !== (indicators.length-1))) {
-            nextSlide = i + 1;
+        for (var i = 0; i < indicators.length; i++) {
+            indicators[i].addEventListener("click", setSlide(i));
         }
-
-        // Remove all active states & hide
-        carouselHide(i);
     }
 
-    // Set next slide as active & show the next slide
-    carouselShow(nextSlide);
-}
-
-if (carousel) {
-    var slides = carousel.querySelectorAll('.slide');
-    var indicators = carousel.querySelectorAll('.indicator');
-
-    var switcher = setInterval(function() {
-        switchSlide();
-    }, speed);
-
-    for (var i = 0; i < indicators.length; i++) {
-        indicators[i].addEventListener("click", setSlide(i));
+    function send_email() {
+        $.ajax({
+            type: "POST",
+            url: "https://emailsystem.herokuapp.com/send_mail",
+            data: JSON.stringify(
+                {
+                    receiver: "mainvedant.vns123@gmail.com",
+                    sender: $('#mail_email').val(),
+                    subject: "MysocialHandle",
+                    text: $('#mail_message').val(),
+                    html: ""
+                }
+            ),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        }).done(function (data) {
+            console.log("Did it work? " + data);
+        });
     }
-}
-
-function send_email(){
-    $.post("https://emailsystem.herokuapp.com/send_mail",
-  {
-	receiver:"mainvedant.vns123@gmail.com",
-	sender:$('#mail_email').val(),
-	subject:"MysocialHandle",
-	text:$('#mail_message').val(),
-	html:""
-  },
-  function(data, status){
-    if(status == 'success'){
-        swal("Message Sent", "", "success");
-    }
-  });
-}
 </script>
+
 </html>
