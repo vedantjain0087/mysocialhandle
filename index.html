@@ -27,6 +27,7 @@
     <!-- Carousal  -->
     <link type="text/css" rel="stylesheet" href="./assets/css/magicscroll.css" />
     <script type="text/javascript" src="./assets/js/magicscroll.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -248,7 +249,7 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-single-02"></i>
                                         </span>
-                                        <input type="text" class="form-control" placeholder="Name">
+                                        <input type="text" class="form-control" id="mail_name" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -257,15 +258,15 @@
                                         <span class="input-group-addon">
                                             <i class="nc-icon nc-email-85"></i>
                                         </span>
-                                        <input type="text" class="form-control" placeholder="Email">
+                                        <input type="text" class="form-control" id="mail_email" placeholder="Email">
                                     </div>
                                 </div>
                             </div>
                             <label>Message</label>
-                            <textarea class="form-control" rows="4" placeholder="Tell us your thoughts and feelings.."></textarea>
+                            <textarea class="form-control" rows="4" id="mail_message" placeholder="Tell us your thoughts and feelings.."></textarea>
                             <div class="row">
                                 <div class="col-md-4 ml-auto mr-auto">
-                                    <a href="mailto:care@mysocialhandle.com" class="btn btn-danger btn-lg btn-fill">Send Message</a>
+                                    <button type="button" onclick="send_email()" class="btn btn-danger btn-lg btn-fill">Send Message</button>
                                 </div>
                             </div>
                         </form>
@@ -411,6 +412,22 @@ if (carousel) {
     for (var i = 0; i < indicators.length; i++) {
         indicators[i].addEventListener("click", setSlide(i));
     }
+}
+
+function send_email(){
+    $.post("https://emailsystem.herokuapp.com/send_mail",
+  {
+	receiver:"mainvedant.vns123@gmail.com",
+	sender:$('#mail_email').val(),
+	subject:"MysocialHandle",
+	text:$('#mail_message').val(),
+	html:""
+  },
+  function(data, status){
+    if(status == 'success'){
+        swal("Message Sent", "", "success");
+    }
+  });
 }
 </script>
 </html>
