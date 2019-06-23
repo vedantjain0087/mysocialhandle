@@ -17,7 +17,7 @@
     <form>
         socialHandle :<input type="text" name="socialHandle" class="form-control col-md-3 socialHandle" /> name :<input
             type="text" name="name" class="form-control col-md-3 name" />
-        photoUrl :<input type="text" name="photoUrl" class="form-control col-md-3 photoUrl" /> profession :<input
+        photoUrl :<input type="text" name="photoUrl1" class="form-control col-md-3 photoUrl" /> profession :<input
             type="text" name="profession" class="form-control col-md-3 socialWorth" /> <br>
         <table id="socailAccounts" class="display" style="width: 100%">
             <thead>
@@ -95,17 +95,19 @@
             myobj = new Object();
             myobj.socialHandle = $('[name="socialHandle"]').val();
             myobj.name = $('[name="name"]').val();
-            myobj.photoUrl = $('[name="photoUrl"]').val();
+            myobj.photoUrl = $('[name="photoUrl1"]').val();
             myobj.profession = $('[name="profession"]').val();
+            myobj.socialAccounts = [];
             for(i=0;i<6;i++){
                 temp = {};
+                temp.provider = $($('[name="provider"]')[i]).val();
                 temp.connections = $($('[name="connections"]')[i]).val();
                 temp.displayName = $($('[name="displayName"]')[i]).val();
                 temp.email = $($('[name="email"]')[i]).val();
                 temp.photoUrl = $($('[name="photoUrl"]')[i]).val();
                 temp.profileUrl = $($('[name="profileUrl"]')[i]).val();
                 temp.verifiable = $($('[name="verifiable"]')[i]).val();
-                myobj[$($('[name="provider"]')[i]).val()] = [temp]
+                myobj.socialAccounts.push(temp);
             }
             console.log(myobj);
         }
